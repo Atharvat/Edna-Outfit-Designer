@@ -10,6 +10,7 @@ import 'package:bubble/bubble.dart';
 
 import '../globals/myColors.dart';
 import '../globals/myFonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -21,7 +22,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   List<types.Message> _messages = [];
   final _user = const types.User(id: "gunjan");
-  String pageTitle = "Goa Fashion Trip";
+  String pageTitle = "Goa fashion week";
 
   @override
   void initState() {
@@ -79,8 +80,49 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(pageTitle, style: TextStyle(fontSize: 20)),
+        primary: true,
+        titleSpacing: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            children: <Widget>[
+              IconButton(
+                icon: SvgPicture.asset("images/menu_icon.svg"),
+                tooltip: 'Menu',
+                onPressed: () {
+                  // handle the press
+                },
+              ),
+              Text(pageTitle,
+                style: const TextStyle(
+                  fontFamily: 'Playfair Display',
+                  fontSize: 32,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              IconButton(
+                //add an image with rounded corners as an icon
+                icon: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: const Image(
+                      image: AssetImage('images/gunjan.jpeg'),
+                      height: 32,
+                      width: 32,
+                    )// add an image with 32 height
+                ),
+                tooltip: 'Profile',
+                onPressed: () {
+                  // handle the press
+                },
+              ),
+            ]
+          ),
+        ),
       ),
       body: Chat(
         theme: const DefaultChatTheme(
@@ -94,7 +136,6 @@ class _ChatScreenState extends State<ChatScreen> {
         showUserAvatars: false,
         showUserNames: false,
         user: _user,
-
       ),
     );
   }
