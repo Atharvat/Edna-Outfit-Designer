@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/screens/menubar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -79,6 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: BurgerMenu(),
       appBar: AppBar(
         primary: true,
         titleSpacing: 0,
@@ -91,13 +93,13 @@ class _ChatScreenState extends State<ChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children: <Widget>[
-              IconButton(
-                icon: SvgPicture.asset("images/menu_icon.svg"),
-                tooltip: 'Menu',
-                onPressed: () {
-                  // handle the press
-                },
-              ),
+              // IconButton(
+              //   icon: SvgPicture.asset("images/menu_icon.svg"),
+              //   tooltip: 'Menu',
+              //   onPressed: () {
+              //     // handle the press
+              //   },
+              // ),
               Text(pageTitle,
                 style: const TextStyle(
                   fontFamily: 'Playfair Display',
