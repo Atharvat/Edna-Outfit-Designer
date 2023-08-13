@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.7
+  flutter_chat_ui: ^1.6.9
 
 dev_dependencies:
   flutter_test:
@@ -64,8 +65,7 @@ flutter:
     - images/attachment_icon.svg
     - images/menu_icon.svg
     - images/send_icon.svg
-    - assets/general_sans_variable.ttf
-    - assets/playfair_display_variable.ttf
+    - images/gunjan.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
