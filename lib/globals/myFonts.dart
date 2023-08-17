@@ -61,4 +61,13 @@ class MyFonts{
     ],
     color: Colors.black,
   );
+  static TextStyle serifHeading = TextStyle(
+    fontFamily: 'Playfair Display',
+    fontSize: 20,
+    fontVariations: const [
+      FontVariation("wght", 400),
+    ],
+    color: Colors.grey[900],
+    letterSpacing: 0.97,
+  );
 }

@@ -91,20 +91,17 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-
             children: <Widget>[
-              // IconButton(
-              //   icon: SvgPicture.asset("images/menu_icon.svg"),
-              //   tooltip: 'Menu',
-              //   onPressed: () {
-              //     // handle the press
-              //   },
-              // ),
-              Text(pageTitle,
-                style: const TextStyle(
-                  fontFamily: 'Playfair Display',
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(pageTitle,
+                    style: const TextStyle(
+                      fontFamily: 'Playfair Display',
+                      fontSize: 32,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
               IconButton(
