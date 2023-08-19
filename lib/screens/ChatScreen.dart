@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:edna/globals/myFonts.dart';
-import 'package:edna/screens/menubar.dart';
+import 'package:edna/screens/BurgerMeny.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;

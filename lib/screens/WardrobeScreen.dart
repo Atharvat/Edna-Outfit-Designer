@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:edna/globals/myFonts.dart';
 import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
-import 'package:edna/screens/menubar.dart';
+import 'package:edna/screens/BurgerMeny.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../globals/myColors.dart';

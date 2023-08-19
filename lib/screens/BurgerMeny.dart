@@ -71,12 +71,19 @@ class BurgerMenu extends StatelessWidget {
             BurgerItem(
               icon: const Icon(Icons.add, color: MyColors.black10, size: 14),
               text: "New Look",
-              onClicked: () {},
+              onClicked: () {
+                // load the new look screen
+                print("clicked");
+                Navigator.pushNamed(context, '/chat');
+              },
             ),
             BurgerItem(
               icon: const Icon(Icons.history, color: MyColors.black10, size: 14),
               text: "History",
-              onClicked: () {},
+              onClicked: () {
+                // load the history screen
+                Navigator.pushNamed(context, '/history');
+              },
             ),
           ]),
           const SizedBox(height: 20),
@@ -103,22 +110,32 @@ class BurgerMenu extends StatelessWidget {
             BurgerItem(
               icon: const Icon(Icons.checkroom, color: MyColors.black10, size: 14),
               text: "View Wardrobe",
-              onClicked: () {},
+              onClicked: () {
+                // load the view wardrobe screen
+                Navigator.pushNamed(context, '/wardrobe');
+              },
             ),
             BurgerItem(
               icon: const Icon(Icons.checkroom, color: MyColors.black10, size: 14),
               text: "Add Articles",
-              onClicked: () {},
+              onClicked: () {
+                // load the add articles screen
+                Navigator.pushNamed(context, '/wardrobe');
+              },
             ),
             BurgerItem(
               icon: const Icon(Icons.travel_explore, color: MyColors.black10, size: 14),
               text: "Gap Analysis",
-              onClicked: () {},
+              onClicked: () {
+                Navigator.pushNamed(context, '/wardrobe');
+              },
             ),
             BurgerItem(
               icon: const Icon(Icons.stream, color: MyColors.black10, size: 14),
               text: "Look of the Day",
-              onClicked: () {},
+              onClicked: () {
+                Navigator.pushNamed(context, '/wardrobe');
+              },
             ),
           ]),
           // send the last BurgerItem to the bottom of screen
@@ -136,65 +153,131 @@ class BurgerMenu extends StatelessWidget {
   }
 }
 
+// class BurgerItem extends StatelessWidget {
+//   const BurgerItem({
+//     super.key,
+//     required this.icon,
+//     required this.text,
+//     required this.onClicked,
+//     this.backgroundColor = MyColors.white
+//   });
+//   // take the icon, text and onClicked as parameter to this widget
+//   final Icon icon;
+//   final String text;
+//   final Function onClicked;
+//   final Color backgroundColor;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     // on click of this item, call the onClicked function
+//     return Container(
+//       width: 328,
+//       height: 56,
+//       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+//       decoration: ShapeDecoration(
+//         color: backgroundColor,
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Container(
+//             width: 24,
+//             height: 24,
+//             padding: const EdgeInsets.all(5),
+//             clipBehavior: Clip.antiAlias,
+//             decoration: BoxDecoration(),
+//             child: Row(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 icon,
+//               ],
+//             ),
+//           ),
+//           const SizedBox(width: 24),
+//           Text(
+//             text,
+//             style: const TextStyle(
+//               color: Color(0xFF0F1728),
+//               fontSize: 16,
+//               fontFamily: 'General Sans Variable',
+//               fontWeight: FontWeight.w500,
+//               height: 1.50,
+//               letterSpacing: 0.24,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class BurgerItem extends StatelessWidget {
   const BurgerItem({
-    super.key,
+    Key? key,
     required this.icon,
     required this.text,
     required this.onClicked,
-    this.backgroundColor = MyColors.white
-  });
-  // take the icon, text and onClicked as parameter to this widget
+    this.backgroundColor = MyColors.white,
+  }) : super(key: key);
+
   final Icon icon;
   final String text;
-  final Function onClicked;
+  final VoidCallback onClicked; // Changed the type to VoidCallback
   final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    // on click of this item, call the onClicked function
-    return Container(
-      width: 328,
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      decoration: ShapeDecoration(
-        color: backgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 24,
-            height: 24,
-            padding: const EdgeInsets.all(5),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                icon,
-              ],
+    return GestureDetector( // Wrap the content in a GestureDetector
+      onTap: onClicked, // Call the onClicked function when clicked
+      child: Container(
+        width: 328,
+        height: 56,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        decoration: ShapeDecoration(
+          color: backgroundColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 24,
+              height: 24,
+              padding: const EdgeInsets.all(5),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  icon,
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 24),
-          Text(
-            text,
-            style: const TextStyle(
-              color: Color(0xFF0F1728),
-              fontSize: 16,
-              fontFamily: 'General Sans Variable',
-              fontWeight: FontWeight.w500,
-              height: 1.50,
-              letterSpacing: 0.24,
+            const SizedBox(width: 24),
+            Text(
+              text,
+              style: const TextStyle(
+                color: Color(0xFF0F1728),
+                fontSize: 16,
+                fontFamily: 'General Sans Variable',
+                fontWeight: FontWeight.w500,
+                height: 1.50,
+                letterSpacing: 0.24,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
