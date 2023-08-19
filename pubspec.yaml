@@ -44,6 +44,7 @@ dependencies:
   sembast: ^3.5.0+1
   path_provider: ^2.1.0
   path: ^1.8.3
+  image_picker: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +102,12 @@ flutter:
     - images/wardrobe/trousers.jpg
     - images/wardrobe/tshirts.jpeg
     - images/wardrobe/watches.jpg
+    - images/oftd/oftd_earrings.jpeg
+    - images/oftd/oftd_crop_top.jpeg
+    - images/oftd/oftd_jacket.jpeg
+    - images/oftd/oftd_jeans.jpeg
+    - images/oftd/oftd_sneakers.jpeg
+    - images/oftd/oftd_watch.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

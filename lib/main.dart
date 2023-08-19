@@ -20,7 +20,7 @@ Future main() async {
   var dir = await getApplicationDocumentsDirectory();
   // make sure it exists
   await dir.create(recursive: true);
-  var dbPath = join(dir.path, 'my_database.db');
+  var dbPath = join(dir.path, 'my_database1.db');
   // var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
 
   var wrCategoriesStore = intMapStoreFactory.store('wardrobe_categories');
@@ -64,9 +64,15 @@ Future main() async {
         }
       );
     }
+    await outfitOfTheDayStore.add(db, {"name": "White ribbed crop top", "image_url": "oftd_crop_top.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black high-waisted jeans", "image_url": "oftd_jeans.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black leather jacket", "image_url": "oftd_jacket.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black slip-on sneakers", "image_url": "oftd_sneakers.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Silver mesh strap watch", "image_url": "oftd_watch.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Silver hoop earrings", "image_url": "oftd_earrings.jpeg"});
   }
 
-  // readJson();
+  // readJson(db);
 
   var db = await databaseFactoryIo.openDatabase(dbPath, version: 1,
       onVersionChanged: (db, oldVersion, newVersion) async {

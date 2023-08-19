@@ -10,8 +10,9 @@ class WardrobeArticleCard extends StatefulWidget {
   List<String> colors;
   bool greyed;
   bool expanded;
+  int productsCount;
 
-  WardrobeArticleCard({super.key, required this.colors, required this.greyed, required this.expanded, required this.name, required this.imageUrl});
+  WardrobeArticleCard({super.key, required this.colors, required this.greyed, required this.expanded, required this.name, required this.imageUrl, required this.productsCount});
 
   @override
   State<WardrobeArticleCard> createState() => _WardrobeArticleCardState();
@@ -53,7 +54,7 @@ class _WardrobeArticleCardState extends State<WardrobeArticleCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                    widget.colors.length.toString(),
+                    widget.productsCount.toString(),
                     style: const TextStyle(
                       fontFamily: 'General Sans',
                       fontSize: 12,
