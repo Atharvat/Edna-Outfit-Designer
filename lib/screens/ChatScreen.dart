@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/globals/prompts.dart';
 import 'package:edna/screens/BurgerMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   List<types.Message> _messages = [];
   final _user = const types.User(id: "Gunjan");
   final _ednauser = const types.User(id: "Edna");
-  String pageTitle = "Goa fashion week";
+  String pageTitle = "Chat";
 
   @override
   void initState() {
@@ -38,11 +39,24 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleSendPressed(types.PartialText message) async {
+    if (_messages.length == 0) {
+      // first message. So send the initial prompt before the message to the API
+      final response = await _sendTextToServer(Prompts.initialPrompt);
+
+      if (response != null && response.containsKey('message')) {
+        // Extract the message from the response
+        final receivedMessage = response['message'] as String;
+        print("*****Received message from API: $receivedMessage.*****");
+        print("*****Initialisation of chat successfully completed*****""");
+      }
+    }
     final newMessage = types.TextMessage(
       author: _user,
       id: const Uuid().v4(),
       text: message.text,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
+      createdAt: DateTime
+          .now()
+          .millisecondsSinceEpoch,
     );
     setState(() {
       _messages.insert(0, newMessage);
@@ -55,17 +69,19 @@ class _ChatScreenState extends State<ChatScreen> {
     if (response != null && response.containsKey('message')) {
       // Extract the message from the response
       final receivedMessage = response['message'] as String;
-      print("*****Received message from API: ${receivedMessage}.*****");
-      if(receivedMessage == "custom"){
+      print("*****Received message from API: $receivedMessage.*****");
+      if (receivedMessage == "custom") {
         print("*****Received custom message.*****");
         print(response['metadata']);
         final customMessage = types.CustomMessage(
           author: _ednauser,
           id: const Uuid().v4(),
-          createdAt: DateTime.now().millisecondsSinceEpoch,
+          createdAt: DateTime
+              .now()
+              .millisecondsSinceEpoch,
           metadata: {
             "imageUrls": response['metadata'],
-        },
+          },
         );
         _addMessage(customMessage);
       } else {
@@ -74,20 +90,35 @@ class _ChatScreenState extends State<ChatScreen> {
           author: _ednauser, // Assuming the server is the author
           id: const Uuid().v4(),
           text: receivedMessage,
-          createdAt: DateTime.now().millisecondsSinceEpoch,
+          createdAt: DateTime
+              .now()
+              .millisecondsSinceEpoch,
         );
 
         // Add the received message to the UI
         _addMessage(receivedTextMessage);
       }
-
-
     } else {
       print('Error: Could not send or receive message');
     }
   }
 
-  Future<Map<String, dynamic>?> _sendMessageToServer(types.TextMessage newMessage) async {
+  Future<Map<String, dynamic>?> _sendTextToServer(String text) async {
+    final apiUrl = 'http://192.168.0.108:5000/?message=${text}';
+    final response = await http.get(Uri.parse(apiUrl));
+    print("********Made request to the API.********");
+
+    if (response.statusCode == 200) {
+      // Successful response, parse the JSON and return it
+      return Map<String, dynamic>.from(json.decode(response.body));
+    } else {
+      // Handle errors here
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> _sendMessageToServer(
+      types.TextMessage newMessage) async {
     final apiUrl = 'http://192.168.0.108:5000/?message=${newMessage.text}';
     final response = await http.get(Uri.parse(apiUrl));
     print("********Made request to the API.********");
@@ -135,7 +166,8 @@ class _ChatScreenState extends State<ChatScreen> {
     print("Expand pressed");
   }
 
-  Widget _customMessageBuilder(types.CustomMessage message, {required int messageWidth}) {
+  Widget _customMessageBuilder(types.CustomMessage message,
+      {required int messageWidth}) {
     messageWidth = 15;
     List<dynamic> imageUrls = message.metadata?['imageUrls'];
     return Container(
