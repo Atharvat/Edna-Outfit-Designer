@@ -1,3 +1,4 @@
+import 'package:edna/screens/HistoryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/screens/OnboardingScreen.dart';
 import 'package:edna/screens/ChatScreen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/chat': (context) => const ChatScreen(),
+        '/history': (context) => const HistoryScreen(),
         '/swipe': (context) => const SwipeScreen(),
         '/preferences': (context) => const PreferencesScreen(),
         '/look': (context) => const LookScreen(),
