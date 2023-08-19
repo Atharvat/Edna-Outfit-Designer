@@ -8,10 +8,9 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bubble/bubble.dart';
+import 'package:http/http.dart' as http;
 
 import '../globals/myColors.dart';
-import '../globals/myFonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -22,7 +21,8 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   List<types.Message> _messages = [];
-  final _user = const types.User(id: "gunjan");
+  final _user = const types.User(id: "Gunjan");
+  final _ednauser = const types.User(id: "Edna");
   String pageTitle = "Goa fashion week";
 
   @override
@@ -37,14 +37,68 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  void _handleSendPressed(types.PartialText message){
+  void _handleSendPressed(types.PartialText message) async {
     final newMessage = types.TextMessage(
       author: _user,
       id: const Uuid().v4(),
       text: message.text,
       createdAt: DateTime.now().millisecondsSinceEpoch,
     );
-    _addMessage(newMessage);
+    setState(() {
+      _messages.insert(0, newMessage);
+    });
+    print("*****Added current message to list.*****");
+
+    // Make a GET request to the API server to send the new message
+    final response = await _sendMessageToServer(newMessage);
+
+    if (response != null && response.containsKey('message')) {
+      // Extract the message from the response
+      final receivedMessage = response['message'] as String;
+      print("*****Received message from API: ${receivedMessage}.*****");
+      if(receivedMessage == "custom"){
+        print("*****Received custom message.*****");
+        print(response['metadata']);
+        final customMessage = types.CustomMessage(
+          author: _ednauser,
+          id: const Uuid().v4(),
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          metadata: {
+            "imageUrls": response['metadata'],
+        },
+        );
+        _addMessage(customMessage);
+      } else {
+        // Create a new message object for the received message
+        final receivedTextMessage = types.TextMessage(
+          author: _ednauser, // Assuming the server is the author
+          id: const Uuid().v4(),
+          text: receivedMessage,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+        );
+
+        // Add the received message to the UI
+        _addMessage(receivedTextMessage);
+      }
+
+
+    } else {
+      print('Error: Could not send or receive message');
+    }
+  }
+
+  Future<Map<String, dynamic>?> _sendMessageToServer(types.TextMessage newMessage) async {
+    final apiUrl = 'http://192.168.0.108:5000/?message=${newMessage.text}';
+    final response = await http.get(Uri.parse(apiUrl));
+    print("********Made request to the API.********");
+
+    if (response.statusCode == 200) {
+      // Successful response, parse the JSON and return it
+      return Map<String, dynamic>.from(json.decode(response.body));
+    } else {
+      // Handle errors here
+      return null;
+    }
   }
 
   void _loadMessages() async {
@@ -52,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final messages = (jsonDecode(response) as List)
         .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
         .toList();
-
+    print(messages.length);
     setState(() {
       _messages = messages;
     });
@@ -76,6 +130,41 @@ class _ChatScreenState extends State<ChatScreen> {
         ? BubbleNip.leftBottom
         : BubbleNip.rightBottom,
   );
+
+  void onExpandPressed() {
+    print("Expand pressed");
+  }
+
+  Widget _customMessageBuilder(types.CustomMessage message, {required int messageWidth}) {
+    messageWidth = 15;
+    List<dynamic> imageUrls = message.metadata?['imageUrls'];
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 4.0,
+              mainAxisSpacing: 4.0,
+            ),
+            itemCount: imageUrls.length,
+            itemBuilder: (context, index) {
+              return Image.network(imageUrls[index]);
+            },
+          ),
+          const SizedBox(height: 8.0),
+          ElevatedButton(
+            onPressed: onExpandPressed,
+            child: const Text('Expand'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +227,7 @@ class _ChatScreenState extends State<ChatScreen> {
         showUserAvatars: false,
         showUserNames: false,
         user: _user,
+        customMessageBuilder: _customMessageBuilder,
       ),
     );
   }
