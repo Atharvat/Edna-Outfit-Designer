@@ -68,6 +68,6 @@ class MyFonts{
       FontVariation("wght", 400),
     ],
     color: Colors.grey[900],
-    letterSpacing: 0.97,
+    letterSpacing: -0.04,
   );
 }

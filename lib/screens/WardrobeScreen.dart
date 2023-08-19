@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/screens/menubar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -101,6 +102,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
               SizedBox(
                 height: 136,
                 child: ListView(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 16,),
@@ -228,8 +230,9 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                 child: Text("Articles", style: MyFonts.serifHeading,),
               ),
               const SizedBox(height: 24),
-
-              const SizedBox(height: 32),
+              WardrobeArticlesSection(),
+              WardrobeArticlesSection(),
+              const SizedBox(height: 96),
             ],
           ),
         ),
