@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:edna/globals/myFonts.dart';
@@ -5,6 +6,10 @@ import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/screens/BurgerMenu.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 
 import '../globals/myColors.dart';
 
@@ -26,11 +31,36 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
     "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
   ];
   final String _todayOutfitMessage = "This ensemble offers a blend of casual comfort and nostalgic charm, perfect for a day out with friends or exploring the city.";
+  late Database db;
+  var wrCategoriesStore = intMapStoreFactory.store('wardrobe_categories');
+  List<RecordSnapshot<int, Map<String, Object?>>>? categories;
+
+  @override
+  void initState() {
+    super.initState();
+    // loadData().whenComplete(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      loadData();
+    });
+  }
+
+  Future<void> loadData() async {
+    var dir = await getApplicationDocumentsDirectory();
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    var categories1 = await wrCategoriesStore.find(db);
+    setState(() {
+      categories = categories1;
+    });
+    // print((categories1[0]['articles'] as List)[0]);
+
+  }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
-      drawer: BurgerMenu(),
+      drawer: const BurgerMenu(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64.0),
         child: Container(
@@ -230,8 +260,11 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                 child: Text("Articles", style: MyFonts.serifHeading,),
               ),
               const SizedBox(height: 24),
-              WardrobeArticlesSection(),
-              WardrobeArticlesSection(),
+
+              // if(categories != null)
+              for(var category in categories ?? [])
+                WardrobeArticlesSection(articleIds: getIntList(category['articles']), name: category.value['name'] as String),
+
               const SizedBox(height: 96),
             ],
           ),
@@ -254,5 +287,14 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
         ),
       )
     );
+  }
+
+  List<int> getIntList(List list) {
+    // create a new list of size same as list
+    List<int> newList = List<int>.filled(list.length, 0);
+    for(int i = 0; i < list.length; i++) {
+      newList[i] = int.parse(list[i].toString());
+    }
+    return newList;
   }
 }

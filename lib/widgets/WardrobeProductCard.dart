@@ -4,7 +4,9 @@ import 'package:edna/globals/myColors.dart';
 import 'package:flutter/material.dart';
 
 class WardrobeProductCard extends StatefulWidget {
-  const WardrobeProductCard({super.key});
+  final Map<String, Object?> product;
+
+  const WardrobeProductCard({super.key, required this.product});
 
   @override
   State<WardrobeProductCard> createState() => _WardrobeProductCardState();
@@ -12,8 +14,8 @@ class WardrobeProductCard extends StatefulWidget {
 
 class _WardrobeProductCardState extends State<WardrobeProductCard> {
 
-  final String _productText = "Vintage-style black graphic tee with retro arcade game design";
-  final List<String> _colors = ["#000000", "#FFFFFF"];
+  // final String _productText = "Vintage-style black graphic tee with retro arcade game design";
+  // final List<String> _colors = ["#000000", "#FFFFFF"];
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +36,15 @@ class _WardrobeProductCardState extends State<WardrobeProductCard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < _colors.length; i++)
+                  for (int i = 0; i < (widget.product['colors'] as List).length; i++)
                     Container(
                       height: 12,
                       width: 12,
                       transform: Matrix4.translationValues((-7*i).toDouble(), 0, 0),
                       decoration: BoxDecoration(
-                          color: Color(int.parse("0xFF${_colors[i].substring(1)}")),
+                          color: Color(int.parse("0xFF${(widget.product['colors'] as List)[i].substring(1)}")),
                           shape: BoxShape.circle,
-                          border: _colors[i] == "#FFFFFF" ? Border.all(
+                          border: (widget.product['colors'] as List)[i] == "#FFFFFF" ? Border.all(
                               color: Colors.black,
                               width: 1
                           ) : null
@@ -62,7 +64,7 @@ class _WardrobeProductCardState extends State<WardrobeProductCard> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                  _productText,
+                widget.product['text'] as String,
                   style: TextStyle(
                     fontFamily: 'General Sans',
                     fontSize: 12,

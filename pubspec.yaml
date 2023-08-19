@@ -41,6 +41,9 @@ dependencies:
   uuid: ^3.0.7
   bubble: ^1.2.1
   fading_edge_scrollview: ^3.0.0
+  sembast: ^3.5.0+1
+  path_provider: ^2.1.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,33 @@ flutter:
     - images/send_icon.svg
     - images/gunjan.jpeg
     - images/lower_triangle.svg
+    - assets/wardrobe.json
+    - images/wardrobe/a-line.jpg
+    - images/wardrobe/bags.jpg
+    - images/wardrobe/blazers.jpg
+    - images/wardrobe/cardigans.jpg
+    - images/wardrobe/crop-tops.jpg
+    - images/wardrobe/ethnic.jpg
+    - images/wardrobe/flats.jpg
+    - images/wardrobe/heels.jpg
+    - images/wardrobe/jackets.jpg
+    - images/wardrobe/jeans.jpg
+    - images/wardrobe/jewelry.jpg
+    - images/wardrobe/kurtas.jpg
+    - images/wardrobe/maxi.jpg
+    - images/wardrobe/midi.jpg
+    - images/wardrobe/palazzos.jpg
+    - images/wardrobe/salwar-kameez.jpg
+    - images/wardrobe/sarees.jpg
+    - images/wardrobe/scarf.jpg
+    - images/wardrobe/shirts.jpg
+    - images/wardrobe/skirts.jpg
+    - images/wardrobe/sneakers.jpg
+    - images/wardrobe/sunglasses.jpg
+    - images/wardrobe/tank-tops.jpg
+    - images/wardrobe/trousers.jpg
+    - images/wardrobe/tshirts.jpeg
+    - images/wardrobe/watches.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
