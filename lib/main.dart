@@ -4,6 +4,7 @@ import 'package:edna/screens/ChatScreen.dart';
 import 'package:edna/screens/SwipeScreen.dart';
 import 'package:edna/screens/PreferencesScreen.dart';
 import 'package:edna/screens/LookScreen.dart';
+import 'package:edna/screens/WardrobeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +17,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/chat',
+      initialRoute: '/wardrobe',
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/chat': (context) => const ChatScreen(),
         '/swipe': (context) => const SwipeScreen(),
         '/preferences': (context) => const PreferencesScreen(),
         '/look': (context) => const LookScreen(),
+        '/wardrobe': (context) => const WardrobeScreen(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -40,6 +40,7 @@ dependencies:
   flutter_chat_types: ^3.6.2
   uuid: ^3.0.7
   bubble: ^1.2.1
+  fading_edge_scrollview: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - images/menu_icon.svg
     - images/send_icon.svg
     - images/gunjan.jpeg
+    - images/lower_triangle.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
