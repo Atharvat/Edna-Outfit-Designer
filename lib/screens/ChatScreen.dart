@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:edna/globals/myFonts.dart';
 import 'package:edna/globals/prompts.dart';
 import 'package:edna/screens/BurgerMenu.dart';
+import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -41,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // _loadMessages();
   }
 
-  void _addMessage(types.Message message) {
+  void _addMessage(types.Message message){
     setState(() {
       _messages.insert(0, message);
     });
@@ -296,6 +297,8 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,38 +311,34 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      pageTitle,
-                      style: const TextStyle(
-                        fontFamily: 'Playfair Display',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(pageTitle,
+                    style: MyFonts.serifHeading24,
                   ),
                 ),
-                IconButton(
-                  //add an image with rounded corners as an icon
-                  icon: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: const Image(
-                        image: AssetImage('images/gunjan.jpeg'),
-                        height: 32,
-                        width: 32,
-                      ) // add an image with 32 height
-                      ),
-                  tooltip: 'Profile',
-                  onPressed: () {
-                    // handle the press
-                  },
+              ),
+              IconButton(
+                //add an image with rounded corners as an icon
+                icon: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: const Image(
+                      image: AssetImage('images/gunjan.jpg'),
+                      height: 48,
+                      width: 48,
+                    )// add an image with 32 height
                 ),
-              ]),
+                tooltip: 'Profile',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/about_you');
+                },
+              ),
+            ]
+          ),
         ),
       ),
       body: Chat(

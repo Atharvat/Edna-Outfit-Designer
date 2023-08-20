@@ -44,46 +44,42 @@ class _LookScreenState extends State<LookScreen> {
               padding:
                   const EdgeInsets.symmetric(vertical: 200, horizontal: 12),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      pageTitle,
-                      style: const TextStyle(
-                        fontFamily: 'Playfair Display',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(
-                            Icons.bookmark_add_outlined,
-                            size: 24,
-                            color: Colors.black,
-                          ),
-                          tooltip: 'Bookmark',
-                          onPressed: () {
-                            // handle the press
-                          },
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    pageTitle,
+                    style: MyFonts.serifHeading24,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(
+                          Icons.bookmark_add_outlined,
+                          size: 24,
+                          color: Colors.black,
                         ),
-                        // IconButton(
-                        //   icon: const Icon(
-                        //     Icons.close,
-                        //     size: 24,
-                        //     color: Colors.black,
-                        //   ),
-                        //   tooltip: 'Close',
-                        //   onPressed: () {
-                        //     // handle the press
-                        //   },
-                        // ),
-                      ],
-                    )
-                  ]),
+                        tooltip: 'Bookmark',
+                        onPressed: () {
+                          // handle the press
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                        tooltip: 'Close',
+                        onPressed: () {
+                          // handle the press
+                        },
+                      ),
+                    ],
+                  )
+                ]),
             ),
           ),
         ),

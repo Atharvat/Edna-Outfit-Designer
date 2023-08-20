@@ -1,3 +1,4 @@
+import 'package:edna/screens/AboutYouScreen.dart';
 import 'package:edna/screens/HistoryScreen.dart';
 import 'dart:convert';
 
@@ -20,8 +21,8 @@ Future main() async {
   var dir = await getApplicationDocumentsDirectory();
   // make sure it exists
   await dir.create(recursive: true);
-  var dbPath = join(dir.path, 'my_database.db');
-  // var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+  var dbPath = join(dir.path, 'my_database2.db');
+  // var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
 
   var wrCategoriesStore = intMapStoreFactory.store('wardrobe_categories');
   var wrProductsStore = intMapStoreFactory.store('wardrobe_products');
@@ -64,9 +65,27 @@ Future main() async {
         }
       );
     }
+    await outfitOfTheDayStore.add(db, {"name": "White ribbed crop top", "image_url": "oftd_crop_top.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black high-waisted jeans", "image_url": "oftd_jeans.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black leather jacket", "image_url": "oftd_jacket.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Black slip-on sneakers", "image_url": "oftd_sneakers.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Silver mesh strap watch", "image_url": "oftd_watch.jpeg"});
+    await outfitOfTheDayStore.add(db, {"name": "Silver hoop earrings", "image_url": "oftd_earrings.jpeg"});
+
+    await preferencesStore.add(db, {"title": "", "value": ""});
+
+    await chatsStore.add(db, {"name": "Ball Dance Gown", "date": "today", "messages": []});
+    await chatsStore.add(db, {"name": "Goa Trip Dresses", "date": "today", "messages": []});
+    await chatsStore.add(db, {"name": "Friends Birthday Party", "date": "yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Office Party", "date": "yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Wedding Dress Ideas", "date": "last week", "messages": []});
+    await chatsStore.add(db, {"name": "Daily casual outfits", "date": "last week", "messages": []});
+    await chatsStore.add(db, {"name": "Formal Wear", "date": "last week", "messages": []});
+
+
   }
 
-  // readJson();
+  // readJson(db);
 
   var db = await databaseFactoryIo.openDatabase(dbPath, version: 1,
       onVersionChanged: (db, oldVersion, newVersion) async {
@@ -89,7 +108,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/wardrobe',
+      initialRoute: '/chat',
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/chat': (context) => const ChatScreen(),
@@ -98,6 +117,7 @@ class MyApp extends StatelessWidget {
         '/preferences': (context) => const PreferencesScreen(),
         '/look': (context) => const LookScreen(),
         '/wardrobe': (context) => const WardrobeScreen(),
+        '/about_you': (context) => const AboutYouScreen(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF038969)),

@@ -38,7 +38,7 @@ class _WardrobeArticlesSectionState extends State<WardrobeArticlesSection> {
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var wrArticlesStore = intMapStoreFactory.store('wardrobe_articles');
     List<Map<String, Object?>> articles1 = [];
     for(var articleId in widget.articleIds) {
@@ -101,7 +101,7 @@ class _WardrobeArticlesSectionState extends State<WardrobeArticlesSection> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: WardrobeArticleCard(colors: getStringList(article['colors'] as List), greyed: (!(expandedArticleId == widget.articleIds[articles!.indexOf(article)]) && expanded), expanded: expandedArticleId == widget.articleIds[articles!.indexOf(article)], name: article['name'] as String, imageUrl: article['image_url'] as String),
+                    child: WardrobeArticleCard(colors: getStringList(article['colors'] as List), greyed: (!(expandedArticleId == widget.articleIds[articles!.indexOf(article)]) && expanded), expanded: expandedArticleId == widget.articleIds[articles!.indexOf(article)], name: article['name'] as String, imageUrl: article['image_url'] as String, productsCount: (article['products'] as List).length,),
                   )
                 ),
               const SizedBox(width: 8,),

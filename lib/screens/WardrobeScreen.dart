@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/screens/BurgerMenu.dart';
@@ -12,6 +12,7 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 import '../globals/myColors.dart';
+import '../widgets/WardrobeBottomSheet.dart';
 
 class WardrobeScreen extends StatefulWidget {
   const WardrobeScreen({super.key});
@@ -23,22 +24,16 @@ class WardrobeScreen extends StatefulWidget {
 class _WardrobeScreenState extends State<WardrobeScreen> {
 
   final String _pageTitle = "Your Wardrobe";
-  final List<String> _todayArticles = [
-    "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
-    "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
-    "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
-    "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
-    "https://images.unsplash.com/photo-1691860305089-9a2566296202?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=240&q=80",
-  ];
-  final String _todayOutfitMessage = "This ensemble offers a blend of casual comfort and nostalgic charm, perfect for a day out with friends or exploring the city.";
+  final String _todayOutfitMessage = "Effortless elegance: A white crop top and black high-waisted jeans complemented by a sleek leather jacket, slip-on sneakers, silver accessories.";
   late Database db;
   var wrCategoriesStore = intMapStoreFactory.store('wardrobe_categories');
+  var outfitOfTheDayStore = intMapStoreFactory.store('outfit_of_the_day');
   List<RecordSnapshot<int, Map<String, Object?>>>? categories;
+  List<RecordSnapshot<int, Map<String, Object?>>>? oftd;
 
   @override
   void initState() {
     super.initState();
-    // loadData().whenComplete(() => setState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_){
       loadData();
     });
@@ -46,13 +41,13 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var categories1 = await wrCategoriesStore.find(db);
+    var oftd1 = await outfitOfTheDayStore.find(db);
     setState(() {
       categories = categories1;
+      oftd = oftd1;
     });
-    // print((categories1[0]['articles'] as List)[0]);
-
   }
 
   @override
@@ -60,7 +55,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
 
 
     return Scaffold(
-      drawer: const BurgerMenu(),
+      drawer: const BurgerMenuNew(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64.0),
         child: Container(
@@ -86,11 +81,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(_pageTitle,
-                          style: const TextStyle(
-                            fontFamily: 'Playfair Display',
-                            fontSize: 32,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: MyFonts.serifHeading24,
                         ),
                       ),
                     ),
@@ -99,14 +90,14 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                       icon: ClipRRect(
                           borderRadius: BorderRadius.circular(100.0),
                           child: const Image(
-                            image: AssetImage('images/gunjan.jpeg'),
+                            image: AssetImage('images/gunjan.jpg'),
                             height: 32,
                             width: 32,
                           )// add an image with 32 height
                       ),
                       tooltip: 'Profile',
                       onPressed: () {
-                        // handle the press
+                        Navigator.pushNamed(context, '/about_you');
                       },
                     ),
                   ]
@@ -130,23 +121,43 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
               ),
               const SizedBox(height: 16,),
               SizedBox(
-                height: 136,
+                height: 188,
                 child: ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
                     const SizedBox(width: 16,),
-                    //for each url in _todayArticles, create an image of height 136 and width 96 and spacing of 16 between them
-                    for (var url in _todayArticles)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: ClipRRect(
-                          // borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            url,
-                            height: 136,
-                            width: 96,
-                            fit: BoxFit.cover,
+                    for (var product in oftd ?? [])
+                      SizedBox(
+                        width: 104,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                // borderRadius: BorderRadius.circular(8.0),
+                                child: Image(
+                                  image: AssetImage("images/oftd/${product['image_url']}"),
+                                  height: 136,
+                                  width: 96,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(height: 8,),
+                              Text(
+                                product['name'] as String,
+                                style: TextStyle(
+                                  fontFamily: 'General Sans',
+                                  fontSize: 12,
+                                  fontVariations: const [
+                                    FontVariation("wght", 600),
+                                  ],
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -274,6 +285,18 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
+          showDialog(
+              // isScrollControlled: false,
+              context: context,
+              builder: (context) {
+                return SimpleDialog(
+                  contentPadding: const EdgeInsets.all(0),
+                  children: [
+                    WardrobeBottomSheet(addProduct: addProduct),
+                  ],
+                );
+              }
+          );
         },
         elevation: 0,
         backgroundColor: MyColors.green10,
@@ -296,5 +319,11 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
       newList[i] = int.parse(list[i].toString());
     }
     return newList;
+  }
+
+  void addProduct(String text){
+    setState(() {
+      // products.add(text);
+    });
   }
 }
