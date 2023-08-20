@@ -74,7 +74,7 @@ Future main() async {
 
     await preferencesStore.add(db, {"title": "", "value": ""});
 
-    await chatsStore.add(db, {"name": "Ball Dance Gown", "date": "today", "messages": []});
+    await chatsStore.add(db, {"name": "Dazzling Date Night", "date": "today", "messages": []});
     await chatsStore.add(db, {"name": "Goa Trip Dresses", "date": "today", "messages": []});
     await chatsStore.add(db, {"name": "Friends Birthday Party", "date": "yesterday", "messages": []});
     await chatsStore.add(db, {"name": "Office Party", "date": "yesterday", "messages": []});

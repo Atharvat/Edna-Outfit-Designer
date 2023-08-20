@@ -66,8 +66,11 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
                   if(image == null) return;
                   final imageTemp = File(image!.path);
                   // setState(() => this.image = imageTemp);
-                  setState(() {
-                    isUploaded = true;
+                  Future.delayed(const Duration(milliseconds: 2000), () {
+                    setState(() {
+                      isUploaded = true;
+                    });
+
                   });
                 } on PlatformException catch(e) {
                   if (kDebugMode) {
@@ -132,7 +135,8 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
                 borderRadius: BorderRadius.circular(28),
                 color: const Color(0xFFF2F7FB),
               ),
-              child: TextField(
+              child: TextFormField(
+                initialValue: isUploaded ? "A pastel green printed t-shirt" : "",
                 onChanged: (value) {
                   setState(() {
                     text = value;
@@ -140,9 +144,9 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
                 },
                 minLines: 1,
                 maxLines: 5,
-                decoration: const InputDecoration(
-                  hintText: "Write a brief description about the article you want to add to your wardrobe. ",
-                  hintStyle: TextStyle(
+                decoration: InputDecoration(
+                  hintText: isUploaded ?  "A pastel green printed crew neck t-shirt" : "Write a brief description about the article you want to add to your wardrobe. ",
+                  hintStyle: const TextStyle(
                     fontFamily: 'General Sans',
                     height: 1.5,
                     fontSize: 16,
