@@ -18,9 +18,10 @@ import '../utils/server_api.dart';
 
 class LookScreenArguments {
   final String pageTitle;
+  final List<String> itemTitles;
   final List<List<ProductDetails>> allProductDetails;
 
-  LookScreenArguments(this.pageTitle, this.allProductDetails);
+  LookScreenArguments(this.pageTitle, this.itemTitles, this.allProductDetails);
 }
 
 class ChatScreen extends StatefulWidget {
@@ -126,6 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       List<dynamic> items = look1?['items'];
       List<List<ProductDetails>> allProductDetails = [];
+      List<String> itemTitles = [];
 
       // loop to iterate through items and call the flipkart api for each query
       for (int i = 0; i < items.length; i++) {
@@ -133,10 +135,12 @@ class _ChatScreenState extends State<ChatScreen> {
         String item = items[i];
         // call the flipkart api for the item
         List<ProductDetails>? productDetails = await flipkartSearch(look1?[item]);
+        itemTitles.add(look1?[item]);
         allProductDetails.add(productDetails!);
       }
 
       look1?['productDetails'] = allProductDetails;
+      look1?['itemTitles'] = itemTitles;
 
       final look1Message = types.CustomMessage(
         author: _ednauser,
@@ -158,16 +162,19 @@ class _ChatScreenState extends State<ChatScreen> {
       Map<String, dynamic>? look2 = jsonData['Look 2'];
       List<dynamic> items = look2?['items'];
       List<List<ProductDetails>> allProductDetails = [];
+      List<String> itemTitles = [];
 
       // loop to iterate through items and call the flipkart api for each query
       for (int i = 0; i < items.length; i++) {
         String item = items[i];
         // call the flipkart api for the item
         List<ProductDetails>? productDetails = await flipkartSearch(look2?[item]);
+        itemTitles.add(look2?[item]);
         allProductDetails.add(productDetails!);
       }
 
       look2?['productDetails'] = allProductDetails;
+      look2?['itemTitles'] = itemTitles;
       final look2Message = types.CustomMessage(
         author: _ednauser,
         id: const Uuid().v4(),
@@ -228,7 +235,10 @@ class _ChatScreenState extends State<ChatScreen> {
         _lookMessageHandler(response);
       } else {
         // We have a text message from Edna
-        _textMessageHandler(response);
+        if(response['message'] != ""){
+          _textMessageHandler(response);
+        }
+
       }
     } else {
       print("debug: Error: Could not send or receive message");
@@ -278,6 +288,7 @@ class _ChatScreenState extends State<ChatScreen> {
     List<dynamic> items = look?['items'];
 
     List<List<ProductDetails>> allProductDetails = look?['productDetails'];
+    List<String> itemTitles = look?['itemTitles'];
 
     List<dynamic> imageUrls = [];
     for (int i = 0; i < allProductDetails.length; i++){
@@ -319,7 +330,7 @@ class _ChatScreenState extends State<ChatScreen> {
             // call the LookScreen with the information from the
             onPressed: () {
               Navigator.pushNamed(context, '/look',
-                  arguments: LookScreenArguments(pageTitle, allProductDetails));
+                  arguments: LookScreenArguments(pageTitle, itemTitles, allProductDetails));
             },
             child: const Text('Expand'),
           ),
@@ -345,7 +356,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     return Scaffold(
-      drawer: BurgerMenu(),
+      drawer: BurgerMenuNew(),
       appBar: AppBar(
         primary: true,
         titleSpacing: 0,

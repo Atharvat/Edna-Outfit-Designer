@@ -22,6 +22,7 @@ class _LookScreenState extends State<LookScreen> {
         ModalRoute.of(context)!.settings.arguments as LookScreenArguments;
     final allProductsDetails = args.allProductDetails;
     pageTitle = args.pageTitle;
+    final itemTitles = args.itemTitles;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64.0),
@@ -66,17 +67,17 @@ class _LookScreenState extends State<LookScreen> {
                           // handle the press
                         },
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          size: 24,
-                          color: Colors.black,
-                        ),
-                        tooltip: 'Close',
-                        onPressed: () {
-                          // handle the press
-                        },
-                      ),
+                      // IconButton(
+                      //   icon: const Icon(
+                      //     Icons.close,
+                      //     size: 24,
+                      //     color: Colors.black,
+                      //   ),
+                      //   tooltip: 'Close',
+                      //   onPressed: () {
+                      //     // handle the press
+                      //   },
+                      // ),
                     ],
                   )
                 ]),
@@ -119,7 +120,7 @@ class _LookScreenState extends State<LookScreen> {
               children: <Widget>[
                 for (List<ProductDetails> productDetails in allProductsDetails)
                   ArticleHorizontal(
-                    title: productDetails[0].name,
+                    title: itemTitles[allProductsDetails.indexOf(productDetails)],
                     productDetails: productDetails,
                   ),
                 const SizedBox(height: 64),
