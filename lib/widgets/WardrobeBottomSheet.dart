@@ -25,7 +25,6 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //add a 16px border radius
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(16)),

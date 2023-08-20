@@ -1,4 +1,5 @@
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/widgets/BudgetRange.dart';
 import 'package:flutter/material.dart';
 
 class Preference extends StatefulWidget {
@@ -64,7 +65,26 @@ class _PreferenceState extends State<Preference> {
                 ],
               ),
 
-            IconButton(onPressed: (){}, icon: Icon(Icons.edit, color: Colors.grey[900], size: 16,)),
+            IconButton(onPressed: (){
+              if(widget.title == "Budget Range") {
+                showDialog(
+                // isScrollControlled: false,
+                  context: context,
+                  builder: (context) {
+                    return SimpleDialog(
+                      contentPadding: const EdgeInsets.all(0),
+                      children: [
+                        BudgetRange(setBudgetRange: (String text){
+                          setState(() {
+                            widget.value = text;
+                          });
+                        }),
+                      ],
+                    );
+                  }
+              );
+              }
+            }, icon: Icon(Icons.edit, color: Colors.grey[900], size: 16,)),
           ],
         )
     );

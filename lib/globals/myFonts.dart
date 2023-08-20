@@ -108,4 +108,14 @@ class MyFonts{
     color: Colors.grey[900],
     letterSpacing: 0.015,
   );
+
+  static TextStyle radioText = TextStyle(
+    fontFamily: 'General Sans',
+    fontSize: 16,
+    fontVariations: const [
+      FontVariation("wght", 500),
+    ],
+    color: Colors.grey[900],
+    letterSpacing: 0.015,
+  );
 }

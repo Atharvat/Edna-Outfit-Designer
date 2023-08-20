@@ -4,7 +4,6 @@ import 'package:edna/globals/myFonts.dart';
 import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
-import 'package:edna/screens/BurgerMenu.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
