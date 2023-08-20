@@ -43,11 +43,7 @@ class _LookScreenState extends State<LookScreen> {
                 children: <Widget>[
                   Text(
                     pageTitle,
-                    style: const TextStyle(
-                      fontFamily: 'Playfair Display',
-                      fontSize: 32,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: MyFonts.serifHeading24,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

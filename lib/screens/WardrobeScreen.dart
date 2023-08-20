@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:edna/widgets/WardrobeArticlesSection.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/screens/BurgerMenu.dart';
@@ -40,14 +41,13 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var categories1 = await wrCategoriesStore.find(db);
     var oftd1 = await outfitOfTheDayStore.find(db);
     setState(() {
       categories = categories1;
       oftd = oftd1;
     });
-
   }
 
   @override
@@ -55,7 +55,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
 
 
     return Scaffold(
-      drawer: const BurgerMenu(),
+      drawer: const BurgerMenuNew(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64.0),
         child: Container(
@@ -81,11 +81,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(_pageTitle,
-                          style: const TextStyle(
-                            fontFamily: 'Playfair Display',
-                            fontSize: 32,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: MyFonts.serifHeading24,
                         ),
                       ),
                     ),
@@ -94,14 +90,14 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                       icon: ClipRRect(
                           borderRadius: BorderRadius.circular(100.0),
                           child: const Image(
-                            image: AssetImage('images/gunjan.jpeg'),
+                            image: AssetImage('images/gunjan.jpg'),
                             height: 32,
                             width: 32,
                           )// add an image with 32 height
                       ),
                       tooltip: 'Profile',
                       onPressed: () {
-                        // handle the press
+                        Navigator.pushNamed(context, '/about_you');
                       },
                     ),
                   ]

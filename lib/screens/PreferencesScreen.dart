@@ -1,5 +1,4 @@
 import 'package:edna/globals/myFonts.dart';
-import 'package:edna/screens/BurgerMenu.dart';
 import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:edna/widgets/Preference.dart';
 import 'package:flutter/material.dart';
@@ -68,24 +67,29 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
               children: [
                 const SizedBox(height: 14,),
                 //add a circular image
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: const Image(
-                          image: AssetImage('images/gunjan.jpg'),
-                          height: 36,
-                          width: 36,
-                        )// add an image with 32 height
-                    ),
-                    const SizedBox(width: 16,),
-                    Text(
-                      "Gunjan Dhanuka",
-                      style: MyFonts.serifHeading24,
-                    ),
-                  ],
+                InkWell(
+                  onTap: (){
+                    Navigator.pushNamed(context, '/about_you');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: const Image(
+                            image: AssetImage('images/gunjan.jpg'),
+                            height: 48,
+                            width: 48,
+                          )// add an image with 32 height
+                      ),
+                      const SizedBox(width: 16,),
+                      Text(
+                        "Gunjan Dhanuka",
+                        style: MyFonts.serifHeading24,
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 32,),
                 Text(

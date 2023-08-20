@@ -42,7 +42,9 @@ class _BurgerMenuNewState extends State<BurgerMenuNew> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       IconButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.pushNamed(context, '/about_you');
+                          },
                           icon: ClipRRect(
                               borderRadius: BorderRadius.circular(24.0),
                               child: const Image(
@@ -133,7 +135,7 @@ class _BurgerMenuNewState extends State<BurgerMenuNew> {
                   icon: const Icon(Icons.travel_explore, color: MyColors.black10, size: 24),
                   text: "Gap Analysis",
                   onClicked: () {
-                    Navigator.pushNamed(context, '/wardrobe');
+                    Navigator.pushNamed(context, '/chat');
                   },
                 ),
                 BurgerItem(

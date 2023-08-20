@@ -21,8 +21,8 @@ Future main() async {
   var dir = await getApplicationDocumentsDirectory();
   // make sure it exists
   await dir.create(recursive: true);
-  var dbPath = join(dir.path, 'my_database1.db');
-  // var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+  var dbPath = join(dir.path, 'my_database2.db');
+  // var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
 
   var wrCategoriesStore = intMapStoreFactory.store('wardrobe_categories');
   var wrProductsStore = intMapStoreFactory.store('wardrobe_products');
@@ -74,13 +74,13 @@ Future main() async {
 
     await preferencesStore.add(db, {"title": "", "value": ""});
 
-    await chatsStore.add(db, {"name": "Ball Dance Gown", "date": "Today", "messages": []});
-    await chatsStore.add(db, {"name": "Goa Trip Dresses", "date": "Today", "messages": []});
-    await chatsStore.add(db, {"name": "Friends Birthday Party", "date": "Yesterday", "messages": []});
-    await chatsStore.add(db, {"name": "Office Party", "date": "Yesterday", "messages": []});
-    await chatsStore.add(db, {"name": "Wedding Dress Ideas", "date": "Last Week", "messages": []});
-    await chatsStore.add(db, {"name": "Daily casual outfits", "date": "Last Week", "messages": []});
-    await chatsStore.add(db, {"name": "Formal Wear", "date": "Last Week", "messages": []});
+    await chatsStore.add(db, {"name": "Ball Dance Gown", "date": "today", "messages": []});
+    await chatsStore.add(db, {"name": "Goa Trip Dresses", "date": "today", "messages": []});
+    await chatsStore.add(db, {"name": "Friends Birthday Party", "date": "yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Office Party", "date": "yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Wedding Dress Ideas", "date": "last week", "messages": []});
+    await chatsStore.add(db, {"name": "Daily casual outfits", "date": "last week", "messages": []});
+    await chatsStore.add(db, {"name": "Formal Wear", "date": "last week", "messages": []});
 
 
   }
@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/preferences',
+      initialRoute: '/chat',
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/chat': (context) => const ChatScreen(),

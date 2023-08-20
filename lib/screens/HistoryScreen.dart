@@ -2,6 +2,10 @@ import 'package:edna/globals/myColors.dart';
 import 'package:edna/globals/myFonts.dart';
 import 'package:edna/screens/BurgerMenu.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -11,6 +15,27 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+
+  var chatsStore = intMapStoreFactory.store('chats');
+  List<RecordSnapshot<int, Map<String, Object?>>>? chats;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      loadData();
+    });
+  }
+
+  Future<void> loadData() async {
+    var dir = await getApplicationDocumentsDirectory();
+    var db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
+    var chats1 = await chatsStore.find(db);
+    setState(() {
+      chats = chats1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +65,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     IconButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/about_you');
+                      },
                       icon: ClipRRect(
                           borderRadius: BorderRadius.circular(24.0),
                           child: const Image(
@@ -87,32 +114,39 @@ class _HistoryScreenState extends State<HistoryScreen> {
               style: MyFonts.prefSectionHeader,
             ),
             const SizedBox(height: 12,),
-            BurgerItem(
-              icon: dummyIcon,
-              text: "Ball Dance Gown",
-              onClicked: () {},
+            for(var chat in chats ?? [])
+              if(chat['date'] as String == "today")
+                BurgerItem(
+                  icon: dummyIcon,
+                  text: chat.value['name'] as String,
+                  onClicked: () {},
+                ),
+            const SizedBox(height: 40,),
+            Text(
+              "Yesterday",
+              style: MyFonts.prefSectionHeader,
             ),
-            BurgerItem(
-              icon: dummyIcon,
-              text: "Goa Trip Dresses",
-              onClicked: () {},
-            ),
+            const SizedBox(height: 12,),
+            for(var chat in chats ?? [])
+              if(chat['date'] as String == "yesterday")
+                BurgerItem(
+                  icon: dummyIcon,
+                  text: chat.value['name'] as String,
+                  onClicked: () {},
+                ),
             const SizedBox(height: 40,),
             Text(
               "Last Week",
               style: MyFonts.prefSectionHeader,
             ),
             const SizedBox(height: 12,),
-            BurgerItem(
-              icon: dummyIcon,
-              text: "Ball Dance Gown",
-              onClicked: () {},
-            ),
-            BurgerItem(
-              icon: dummyIcon,
-              text: "Goa Trip Dresses",
-              onClicked: () {},
-            ),
+            for(var chat in chats ?? [])
+              if(chat['date'] as String == "last week")
+                BurgerItem(
+                  icon: dummyIcon,
+                  text: chat.value['name'] as String,
+                  onClicked: () {},
+                ),
             const SizedBox(height: 40,),
 
             const Spacer(),

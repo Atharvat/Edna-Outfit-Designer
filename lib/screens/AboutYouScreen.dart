@@ -1,5 +1,6 @@
 import 'package:edna/globals/myFonts.dart';
 import 'package:edna/screens/BurgerMenu.dart';
+import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:edna/widgets/Preference.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -30,7 +31,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database1.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var preferences1 = await preferencesStore.find(db);
     setState(() {
       preferences = preferences1;
@@ -40,7 +41,7 @@ class _AboutYouScreenState extends State<AboutYouScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const BurgerMenu(),
+        drawer: const BurgerMenuNew(),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(64.0),
           child: Container(

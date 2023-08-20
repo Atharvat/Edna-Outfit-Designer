@@ -31,7 +31,7 @@ class _WardrobeProductsHorizontalState extends State<WardrobeProductsHorizontal>
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var wrArticlesStore = intMapStoreFactory.store('wardrobe_articles');
     var wrProductsStore = intMapStoreFactory.store('wardrobe_products');
 

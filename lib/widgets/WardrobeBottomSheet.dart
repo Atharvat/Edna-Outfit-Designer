@@ -26,7 +26,7 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       //add a 16px border radius
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(16)),
         color: Colors.white,
@@ -60,7 +60,7 @@ class _WardrobeBottomSheetState extends State<WardrobeBottomSheet> {
           ),
           GestureDetector(
             onTap: () {
-              File? image;
+              // File? image;
               Future pickImage() async {
                 try {
                   var image = await ImagePicker().pickImage(source: ImageSource.gallery);

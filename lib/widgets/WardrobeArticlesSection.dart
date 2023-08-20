@@ -38,7 +38,7 @@ class _WardrobeArticlesSectionState extends State<WardrobeArticlesSection> {
 
   Future<void> loadData() async {
     var dir = await getApplicationDocumentsDirectory();
-    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database.db'));
+    db = await databaseFactoryIo.openDatabase(join(dir.path, 'my_database2.db'));
     var wrArticlesStore = intMapStoreFactory.store('wardrobe_articles');
     List<Map<String, Object?>> articles1 = [];
     for(var articleId in widget.articleIds) {

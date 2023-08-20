@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:edna/globals/myFonts.dart';
 import 'package:edna/globals/prompts.dart';
 import 'package:edna/screens/BurgerMenu.dart';
+import 'package:edna/screens/BurgerMenuNew.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -201,7 +202,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: BurgerMenu(),
+      drawer: BurgerMenuNew(),
       appBar: AppBar(
         primary: true,
         titleSpacing: 0,
@@ -217,11 +218,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(pageTitle,
-                    style: const TextStyle(
-                      fontFamily: 'Playfair Display',
-                      fontSize: 32,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: MyFonts.serifHeading24,
                   ),
                 ),
               ),
@@ -230,14 +227,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: ClipRRect(
                     borderRadius: BorderRadius.circular(100.0),
                     child: const Image(
-                      image: AssetImage('images/gunjan.jpeg'),
-                      height: 32,
-                      width: 32,
+                      image: AssetImage('images/gunjan.jpg'),
+                      height: 48,
+                      width: 48,
                     )// add an image with 32 height
                 ),
                 tooltip: 'Profile',
                 onPressed: () {
-                  // handle the press
+                  Navigator.pushNamed(context, '/about_you');
                 },
               ),
             ]
