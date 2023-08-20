@@ -22,6 +22,7 @@ class WardrobeScreen extends StatefulWidget {
 
 class _WardrobeScreenState extends State<WardrobeScreen> {
 
+  bool productAdded = false;
   final String _pageTitle = "Your Wardrobe";
   final String _todayOutfitMessage = "Effortless elegance: A white crop top and black high-waisted jeans complemented by a sleek leather jacket, slip-on sneakers, silver accessories.";
   late Database db;
@@ -328,6 +329,7 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
   void addProduct(String text){
     setState(() {
       // products.add(text);
+      productAdded = true;
     });
   }
 }
