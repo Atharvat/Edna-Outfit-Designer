@@ -76,7 +76,7 @@ Future main() async {
       });
   var categories = await wrCategoriesStore.find(db);
   for (var record in categories) {
-    print('Key: ${record.key}, Value: ${record.value}');
+    print("debug: Key: ${record.key}, Value: ${record.value}");
   }
 
   runApp(const MyApp());

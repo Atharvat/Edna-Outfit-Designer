@@ -73,7 +73,7 @@ class BurgerMenu extends StatelessWidget {
               text: "New Look",
               onClicked: () {
                 // load the new look screen
-                print("clicked");
+                print("debug: clicked");
                 Navigator.pushNamed(context, '/chat');
               },
             ),

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:edna/globals/myFonts.dart';
+import 'package:edna/screens/ChatScreen.dart';
+import 'package:edna/utils/flipkart_api.dart';
 import 'package:flutter/material.dart';
 import 'package:edna/widgets/ArticleHorizontal.dart';
 
@@ -12,10 +14,14 @@ class LookScreen extends StatefulWidget {
 }
 
 class _LookScreenState extends State<LookScreen> {
-  String pageTitle = "Dazzling Velvet";
+  String pageTitle = "Looks you like";
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as LookScreenArguments;
+    final allProductsDetails = args.allProductDetails;
+    pageTitle = args.pageTitle;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64.0),
@@ -38,46 +44,46 @@ class _LookScreenState extends State<LookScreen> {
               padding:
                   const EdgeInsets.symmetric(vertical: 200, horizontal: 12),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    pageTitle,
-                    style: const TextStyle(
-                      fontFamily: 'Playfair Display',
-                      fontSize: 32,
-                      fontWeight: FontWeight.w400,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      pageTitle,
+                      style: const TextStyle(
+                        fontFamily: 'Playfair Display',
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      IconButton(
-                        icon: const Icon(
-                          Icons.bookmark_add_outlined,
-                          size: 24,
-                          color: Colors.black,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        IconButton(
+                          icon: const Icon(
+                            Icons.bookmark_add_outlined,
+                            size: 24,
+                            color: Colors.black,
+                          ),
+                          tooltip: 'Bookmark',
+                          onPressed: () {
+                            // handle the press
+                          },
                         ),
-                        tooltip: 'Bookmark',
-                        onPressed: () {
-                          // handle the press
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          size: 24,
-                          color: Colors.black,
-                        ),
-                        tooltip: 'Close',
-                        onPressed: () {
-                          // handle the press
-                        },
-                      ),
-                    ],
-                  )
-                ]),
+                        // IconButton(
+                        //   icon: const Icon(
+                        //     Icons.close,
+                        //     size: 24,
+                        //     color: Colors.black,
+                        //   ),
+                        //   tooltip: 'Close',
+                        //   onPressed: () {
+                        //     // handle the press
+                        //   },
+                        // ),
+                      ],
+                    )
+                  ]),
             ),
           ),
         ),
@@ -106,17 +112,20 @@ class _LookScreenState extends State<LookScreen> {
           ),
           backgroundColor: const Color(0xFF038969),
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(100.0))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(100.0))),
         ),
       ),
       body: Column(
         children: <Widget>[
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
+              child: SingleChildScrollView(
+            child: Column(
               children: <Widget>[
-                ArticleHorizontal(),
+                for (List<ProductDetails> productDetails in allProductsDetails)
+                  ArticleHorizontal(
+                    title: productDetails[0].name,
+                    productDetails: productDetails,
+                  ),
                 const SizedBox(height: 64),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -199,13 +208,72 @@ class _LookScreenState extends State<LookScreen> {
                 ),
                 const SizedBox(height: 100),
               ],
-          ),
-            )),
+            ),
+          )),
           Container(
             height: 80,
             alignment: Alignment.center,
-            color: const Color(0x10000000),
-            child: const Text("Placeholder for chat window"),
+            color: const Color(0x10ffffff),
+            // black text box to enter chat message
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+
+                Container(
+                  width: MediaQuery.of(context).size.width - 32,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(
+                          Icons.add,
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                        tooltip: 'Add',
+                        onPressed: () {
+                          // handle the press
+                        },
+                      ),
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Type a message',
+                            hintStyle: TextStyle(
+                              fontFamily: 'General Sans Variable',
+                              fontSize: 18,
+                              fontVariations: [
+                                FontVariation("wght", 500),
+                              ],
+                              color: Color(0xFF101828),
+                            ),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                        tooltip: 'Send',
+                        onPressed: () {
+                          // handle the press
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

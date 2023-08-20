@@ -1,11 +1,16 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:edna/widgets/ProductCard.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/flipkart_api.dart';
+
 class ArticleHorizontal extends StatefulWidget {
-  const ArticleHorizontal({super.key});
+  ArticleHorizontal({super.key, required this.title, required this.productDetails});
+  String title;
+  List<ProductDetails> productDetails;
 
   @override
   State<ArticleHorizontal> createState() => _ArticleHorizontalState();
@@ -13,11 +18,11 @@ class ArticleHorizontal extends StatefulWidget {
 
 class _ArticleHorizontalState extends State<ArticleHorizontal> {
 
-  String _title = "Full length Ball Gown";
   final _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    List<ProductDetails> productDetails = widget.productDetails;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +33,7 @@ class _ArticleHorizontalState extends State<ArticleHorizontal> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              _title,
+              widget.title,
               style: const TextStyle(
                 fontFamily: 'Playfair Display',
                 fontSize: 20,
@@ -52,11 +57,22 @@ class _ArticleHorizontalState extends State<ArticleHorizontal> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   controller: _controller,
-                  children: const [
+                  children: [
                     SizedBox(width: 16,),
-                    ProductCard(),
-                    SizedBox(width: 8,),
-                    ProductCard()
+                    for(ProductDetails product in productDetails)
+                      ProductCard(
+                        name: product.name,
+                        price: product.price,
+                        rating: product.rating,
+                        images: product.thumbnailUrl,
+                        // add random value for noOfRatings field
+                        noOfRatings: Random().nextInt(1000).toString(),
+                        url: product.url,
+                        isSelected: true,
+                      ),
+                    // ProductCard(),
+                    // SizedBox(width: 8,),
+                    // ProductCard()
                   ],
                 ),
               ),
