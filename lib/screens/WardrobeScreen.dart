@@ -231,17 +231,22 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
               const SizedBox(height: 52),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("Gap Analysis", style: MyFonts.serifHeading,),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
-                      color: Colors.grey[600],
-                    )
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/chat', arguments: 'gap_analysis');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Gap Analysis", style: MyFonts.serifHeading,),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Colors.grey[600],
+                      )
+                    ],
+                  ),
                 )
               ),
               const SizedBox(height: 16),

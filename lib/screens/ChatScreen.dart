@@ -31,7 +31,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+
   List<types.Message> _messages = [];
+  bool _gapAnalysis = false;
+  bool _gapAnalysisDone = false;
   final _user = const types.User(id: "Gunjan");
   final _ednauser = const types.User(id: "Edna");
   String pageTitle = "Chat with Edna";
@@ -46,6 +49,34 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _messages.insert(0, message);
     });
+  }
+
+  void _sendGapAnalysis() async {
+    // first message. So send the initial prompt before the message to the API
+    print("debug: Sending initial prompt to the API");
+    var response = await sendTextToServer(Prompts.gapAnalysisPrompt);
+    if (response != null && response.containsKey('message')) {
+      // Extract the message from the response
+      final receivedMessage = response['message'] as String;
+      print("debug: *****Received message from API: $receivedMessage.*****");
+      print("debug: *****Initialisation of gap analysis*****" "");
+    }
+
+    // send a message from Edna's side to confirm the initial prompt has been sent
+    final newMessage = types.TextMessage(
+      author: _user,
+      id: const Uuid().v4(),
+      text:
+      "Hi Edna, suggest me some clothes to fill the gaps from my wardrobe.",
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+    );
+    _addMessage(newMessage);
+
+    response = await sendTextToServer("gap_analysis");
+    if (response!.containsKey('looks')) {
+      // Implies we have a custom looks message from Edna
+      _lookMessageHandler(response);
+    }
   }
 
   void _sendInitialPrompt(types.PartialText message) async {
@@ -301,6 +332,18 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String path = ModalRoute.of(context)!.settings.arguments.toString();
+    if(path == "gap_analysis"){
+      _gapAnalysis = true;
+    } else {
+      _gapAnalysis = false;
+    }
+
+    if(_gapAnalysis && !_gapAnalysisDone){
+      _sendGapAnalysis();
+      _gapAnalysisDone = true;
+    }
+
     return Scaffold(
       drawer: BurgerMenu(),
       appBar: AppBar(
