@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../globals/myColors.dart';
@@ -235,43 +237,30 @@ class BurgerItem extends StatelessWidget {
     return GestureDetector( // Wrap the content in a GestureDetector
       onTap: onClicked, // Call the onClicked function when clicked
       child: Container(
-        width: 328,
-        height: 56,
+        // width: 328,
+        // height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         decoration: ShapeDecoration(
           color: backgroundColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 24,
-              height: 24,
-              padding: const EdgeInsets.all(5),
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  icon,
-                ],
-              ),
-            ),
+            icon,
             const SizedBox(width: 24),
             Text(
               text,
-              style: const TextStyle(
-                color: Color(0xFF0F1728),
+              style: TextStyle(
+                color: Colors.grey[900],
                 fontSize: 16,
-                fontFamily: 'General Sans Variable',
-                fontWeight: FontWeight.w500,
-                height: 1.50,
-                letterSpacing: 0.24,
+                fontFamily: 'General Sans',
+                fontVariations: const [
+                  FontVariation("wght", 500),
+                ],
+                letterSpacing: 0.015,
               ),
             ),
           ],

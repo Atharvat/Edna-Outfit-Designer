@@ -1,3 +1,4 @@
+import 'package:edna/screens/AboutYouScreen.dart';
 import 'package:edna/screens/HistoryScreen.dart';
 import 'dart:convert';
 
@@ -70,6 +71,18 @@ Future main() async {
     await outfitOfTheDayStore.add(db, {"name": "Black slip-on sneakers", "image_url": "oftd_sneakers.jpeg"});
     await outfitOfTheDayStore.add(db, {"name": "Silver mesh strap watch", "image_url": "oftd_watch.jpeg"});
     await outfitOfTheDayStore.add(db, {"name": "Silver hoop earrings", "image_url": "oftd_earrings.jpeg"});
+
+    await preferencesStore.add(db, {"title": "", "value": ""});
+
+    await chatsStore.add(db, {"name": "Ball Dance Gown", "date": "Today", "messages": []});
+    await chatsStore.add(db, {"name": "Goa Trip Dresses", "date": "Today", "messages": []});
+    await chatsStore.add(db, {"name": "Friends Birthday Party", "date": "Yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Office Party", "date": "Yesterday", "messages": []});
+    await chatsStore.add(db, {"name": "Wedding Dress Ideas", "date": "Last Week", "messages": []});
+    await chatsStore.add(db, {"name": "Daily casual outfits", "date": "Last Week", "messages": []});
+    await chatsStore.add(db, {"name": "Formal Wear", "date": "Last Week", "messages": []});
+
+
   }
 
   // readJson(db);
@@ -95,7 +108,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/wardrobe',
+      initialRoute: '/preferences',
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
         '/chat': (context) => const ChatScreen(),
@@ -104,6 +117,7 @@ class MyApp extends StatelessWidget {
         '/preferences': (context) => const PreferencesScreen(),
         '/look': (context) => const LookScreen(),
         '/wardrobe': (context) => const WardrobeScreen(),
+        '/about_you': (context) => const AboutYouScreen(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF038969)),

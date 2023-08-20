@@ -74,6 +74,7 @@ flutter:
     - images/menu_icon.svg
     - images/send_icon.svg
     - images/gunjan.jpeg
+    - images/gunjan.jpg
     - images/lower_triangle.svg
     - assets/wardrobe.json
     - images/wardrobe/a-line.jpg
@@ -108,6 +109,16 @@ flutter:
     - images/oftd/oftd_jeans.jpeg
     - images/oftd/oftd_sneakers.jpeg
     - images/oftd/oftd_watch.jpeg
+    - images/prefs/black.jpg
+    - images/prefs/checkers.jpg
+    - images/prefs/deep_v_neck.jpg
+    - images/prefs/jockey.jpg
+    - images/prefs/khadi.jpg
+    - images/prefs/mid_high_range.jpg
+    - images/prefs/pear_shaped.jpg
+    - images/prefs/rustic_modern.jpg
+    - images/prefs/short.jpg
+    - images/prefs/slim_fit.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

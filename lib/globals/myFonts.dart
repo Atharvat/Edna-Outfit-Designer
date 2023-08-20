@@ -70,4 +70,42 @@ class MyFonts{
     color: Colors.grey[900],
     letterSpacing: -0.04,
   );
+  static TextStyle serifHeading24 = TextStyle(
+    fontFamily: 'Playfair Display',
+    fontSize: 24,
+    fontVariations: const [
+      FontVariation("wght", 400),
+    ],
+    color: Colors.grey[900],
+    letterSpacing: -0.04,
+  );
+  static TextStyle prefSectionHeader = TextStyle(
+    fontFamily: 'General Sans',
+    fontSize: 14,
+    fontVariations: const [
+      FontVariation("wght", 600),
+    ],
+    color: Colors.grey[700],
+    letterSpacing: 0.015,
+  );
+
+  static TextStyle prefKey = TextStyle(
+    fontFamily: 'General Sans',
+    fontSize: 16,
+    fontVariations: const [
+      FontVariation("wght", 500),
+    ],
+    color: Colors.grey[500],
+    letterSpacing: 0.015,
+  );
+
+  static TextStyle prefValue = TextStyle(
+    fontFamily: 'General Sans',
+    fontSize: 20,
+    fontVariations: const [
+      FontVariation("wght", 500),
+    ],
+    color: Colors.grey[900],
+    letterSpacing: 0.015,
+  );
 }
